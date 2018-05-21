@@ -1,0 +1,141 @@
+---
+swagger: "2.0"
+info:
+  description: "A sample API that uses a petstore as an example to demonstrate features\
+    \ in the swagger-2.0 specification"
+  version: "1.0.0"
+  title: "Swagger SLA"
+  termsOfService: "http://helloreverb.com/terms/"
+  contact:
+    name: "ISA Research Group"
+    url: "http://www.isa.us.es/"
+    email: "isagroup.us@gmail.com"
+  license:
+    name: "MIT"
+    url: "http://opensource.org/licenses/MIT"
+host: "localhost:30500"
+basePath: "/api/v1"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  # /getNodes:
+  #   get:
+  #     description: "Get nodes up"
+  #     operationId: "getNodesOfKubernetes"
+  #     responses:
+  #       200:
+  #         description: "availability of the node"
+  #       default:
+  #         description: "unexpected error"
+  #     x-swagger-router-controller: "Default"
+  /PDN/{node}:
+    get:
+      description: "Returns the availability at a given time"
+      operationId: "availability"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+        format: date
+      - name: "node"
+        in: "path"
+        description: "node of the system"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "availability of the node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"
+  /CMN/{node}:
+    get:
+      description: "Returns a memory Ram"
+      operationId: "memoryRam"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+        format: date
+      - name: "node"
+        in: "path"
+        description: "Average memory consumption of the node"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Average memory consumption of the node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"
+  /CCN/{node}:
+    get:
+      description: "Returns a user based on a single ID, if the user does not have\
+        \ access to the pet"
+      operationId: "cpu"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+      - name: "node"
+        in: "path"
+        description: "Average memory consumption of the node"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Average memory consumption of the node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"
+  /EON:
+    get:
+      description: "Returns memory usage"
+      operationId: "disk"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+        format: date
+      responses:
+        200:
+          description: "Occupied disk space on a node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"

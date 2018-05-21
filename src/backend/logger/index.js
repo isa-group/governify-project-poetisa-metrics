@@ -1,8 +1,8 @@
 /*!
-project-template-nodejs 1.1.1, built on: 2018-03-27
+governify-project-poetisa-metrics 1.1.1, built on: 2018-05-21
 Copyright (C) 2018 ISA group
 http://www.isa.us.es/
-https://github.com/isa-group/project-template-nodejs
+https://github.com/isa-group/governify-project-poetisa-metrics
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,14 +17,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-'use strict';
+"use strict";
 
 /**
  * Module dependencies.
  * */
 
-const winston = require('winston');
-const config = require('../configurations');
+const winston = require("winston");
+const config = require("../configurations");
 
 /**
  * Configure here your custom levels.
@@ -38,11 +38,11 @@ const customLevels = {
     debug: 13
   },
   colors: {
-    error: 'red',
-    warning: 'yellow',
-    info: 'white',
-    test: 'magenta',
-    debug: 'black'
+    error: "red",
+    warning: "yellow",
+    info: "white",
+    test: "magenta",
+    debug: "black"
   }
 };
 

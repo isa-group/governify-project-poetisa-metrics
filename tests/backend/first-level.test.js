@@ -1,8 +1,8 @@
 /*!
-project-template-nodejs 1.1.1, built on: 2018-03-27
+governify-project-poetisa-metrics 1.1.1, built on: 2018-05-21
 Copyright (C) 2018 ISA group
 http://www.isa.us.es/
-https://github.com/isa-group/project-template-nodejs
+https://github.com/isa-group/governify-project-poetisa-metrics
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,20 +17,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-'use strict';
+"use strict";
 
-const expect = require('chai').expect;
-const lib = require('../../src/backend');
+const expect = require("chai").expect;
+const lib = require("../../src/backend");
 
 /*
  * USE MOCHA AND CHAI for testing your code
  */
-describe('First Level test', function () {
+describe("First Level test", function() {
   this.timeout(10000);
-  it('Execute', done => {
-    let result = lib.myfunction('test', '1');
+  it("Execute", done => {
+    let result = lib.myfunction("test", "1");
 
-    expect(result).to.be.equal('test-1');
+    expect(result).to.be.equal("test-1");
 
     done();
   });

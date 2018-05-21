@@ -1,8 +1,8 @@
 /*!
-project-template-nodejs 1.1.1, built on: 2018-03-27
+governify-project-poetisa-metrics 1.1.1, built on: 2018-05-21
 Copyright (C) 2018 ISA group
 http://www.isa.us.es/
-https://github.com/isa-group/project-template-nodejs
+https://github.com/isa-group/governify-project-poetisa-metrics
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,15 +17,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-'use strict';
+"use strict";
 
 /**
  * Module dependencies.
  * */
 
-const jsyaml = require('js-yaml');
-const fs = require('fs');
-const path = require('path');
+const jsyaml = require("js-yaml");
+const fs = require("fs");
+const path = require("path");
 
 /*
  * Export functions and Objects
@@ -43,12 +43,12 @@ function _addConfiguration(uri, encoding) {
   let configString = null;
 
   if (!uri) {
-    throw new Error('Parameter URI is required');
+    throw new Error("Parameter URI is required");
   } else {
     configString = fs.readFileSync(path.join(__dirname, uri), encoding);
   }
 
-  const newConfigurations = jsyaml.safeLoad(configString)[process.env.NODE_ENV ? process.env.NODE_ENV : 'development'];
+  const newConfigurations = jsyaml.safeLoad(configString)[process.env.NODE_ENV ? process.env.NODE_ENV : "development"];
 
   for (let c in newConfigurations) {
     this[c] = newConfigurations[c];
@@ -58,4 +58,4 @@ function _addConfiguration(uri, encoding) {
 /*
  * Setup default config location
  */
-config.addConfiguration('config.yaml', 'utf8');
+config.addConfiguration("config.yaml", "utf8");

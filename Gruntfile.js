@@ -1,8 +1,8 @@
 /*!
-project-template-nodejs 1.1.1, built on: 2018-03-27
+governify-project-poetisa-metrics 1.1.1, built on: 2018-05-21
 Copyright (C) 2018 ISA group
 http://www.isa.us.es/
-https://github.com/isa-group/project-template-nodejs
+https://github.com/isa-group/governify-project-poetisa-metrics
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
  * CHANGES TO BE PERFORMED:
  *
  ** REPLACE "<my-image-name>" by your DockerHub image (without user)
- ** REPLACE "<my-github-repo>" by your github repo. Eg. isa-group/project-template-nodejs
+ ** REPLACE "<my-github-repo>" by your github repo. Eg. isa-group/governify-project-poetisa-metrics
  *
  */
 
@@ -153,7 +153,7 @@ module.exports = function (grunt) {
         afterRelease: [],
         updateVars: ['pkg'],
         github: {
-          repo: 'isa-group/project-template-nodejs',
+          repo: 'isa-group/governify-project-poetisa-metrics',
           accessTokenVar: 'GITHUB_ACCESS_TOKEN',
           usernameVar: 'GITHUB_USERNAME'
         }

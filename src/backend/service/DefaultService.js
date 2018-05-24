@@ -28,57 +28,63 @@ exports.availability = function (from, to, node) {
         };
         reject(response);
       } else {
-        query = 'select mean("value") from "uptime" where "type" = \'pod\' and "pod_name" =~ /^' +
-          node +
-          '/ and time > \'' +
-          from.toISOString() + '\'';
-        ' and time <= \'' +
-        toDate.toISOString() +
-          '\'';
+        query =
+          'select mean("value") from "uptime" where "type" = \'pod\' and time > \'' +
+          from.toISOString() +
+          "'";
+        " and time <= '" + toDate.toISOString() + "'";
+        if (node) {
+          query = query + 'and "pod_name" =~ /^' + node + "/";
+        }
         logger.info("query: " + query);
-        gap = toDate.diff(toDate, 'days') + 1;
+        gap = toDate.diff(toDate, "days") + 1;
       }
     } else {
-      query = 'select mean("value") from "uptime" where "type" = \'pod\' and "pod_name" =~ /^' +
-        node +
-        '/ and time > \'' +
-        from.toISOString() + '\'';
+      query =
+        'select mean("value") from "uptime" where "type" = \'pod\' and time > \'' +
+        from.toISOString() +
+        "'";
+      if (node) {
+        query = query + 'and "pod_name" =~ /^' + node + "/";
+      }
       logger.info("query: " + query);
-      gap = toDate.diff(moment(), 'days') + 1;
+      gap = toDate.diff(moment(), "days") + 1;
     }
     var response;
     request({
-      method: 'POST',
-      url: config.data.apiInfluxdb,
-      headers: {
-        "content-type": "application/x-www-form-urlencoded"
+        method: "POST",
+        url: config.data.apiInfluxdb,
+        headers: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        form: {
+          q: query,
+          db: "k8s"
+        }
       },
-      form: {
-        q: query,
-        db: 'k8s'
+      (err, res, body) => {
+        if (err) {
+          logger.error(err);
+          reject(err);
+        }
+        if (body === '{"results":[{"statement_id":0}]}\n') {
+          response = {
+            res: res.statusCode,
+            response: "Please check the parameters, as no information is found "
+          };
+        } else {
+          logger.info(res.statusCode);
+          logger.info(body);
+          // is passed from milliseconds to days
+          var timeUp = JSON.parse(body).results[0].series[0].values[0][1] / 3600000 / 24;
+          response = {
+            res: res.statusCode,
+            response: (timeUp / gap).toFixed(2) + " %"
+          };
+        }
+        resolve(response);
       }
-    }, (err, res, body) => {
-      if (err) {
-        logger.error(err);
-        reject(err);
-      }
-      if (body === '{"results":[{"statement_id":0}]}\n') {
-        response = {
-          res: res.statusCode,
-          response: "Please check the parameters, as no information is found "
-        };
-      } else {
-        logger.info(res.statusCode);
-        logger.info(body);
-        // is passed from milliseconds to days
-        var timeUp = (JSON.parse(body).results[0].series[0].values[0][1] / 3600000) / 24;
-        response = {
-          res: res.statusCode,
-          response: (timeUp / gap).toFixed(2) + " %"
-        };
-      }
-      resolve(response);
-    });
+    );
   });
 };
 
@@ -104,32 +110,35 @@ exports.cpu = function (from, to, node) {
         };
         reject(response);
       } else {
-        query = 'select mean("value") from "cpu/usage_rate" where "type" = \'pod\' and "pod_name" =~ /^' +
-          node +
-          '/ and time > \'' +
-          from.toISOString() + '\'';
-        ' and time <= \'' +
-        toDate.toISOString() +
-          '\'';
+        query =
+          'select mean("value") from "cpu/usage_rate" where "type" = \'pod\' and time > \'' +
+          from.toISOString() +
+          "' and time <= '" + toDate.toISOString() + "'";
+        if (node) {
+          query = query + 'and "pod_name" =~ /^' + node + "/";
+        }
         logger.info("query: " + query);
       }
     } else {
-      query = 'select mean("value") from "cpu/usage_rate" where "type" = \'pod\' and "pod_name" =~ /^' +
-        node +
-        '/ and time > \'' +
-        from.toISOString() + '\'';
+      query =
+        'select mean("value") from "cpu/usage_rate" where "type" = \'pod\' and time > \'' +
+        from.toISOString() +
+        "'";
+      if (node) {
+        query = query + 'and "pod_name" =~ /^' + node + "/";
+      }
       logger.info("query: " + query);
     }
     var response;
     request({
-        method: 'POST',
+        method: "POST",
         url: config.data.apiInfluxdb,
         headers: {
           "content-type": "application/x-www-form-urlencoded"
         },
         form: {
           q: query,
-          db: 'k8s'
+          db: "k8s"
         }
       },
       (err, res, body) => {
@@ -145,10 +154,10 @@ exports.cpu = function (from, to, node) {
         } else {
           logger.info(res.statusCode);
           logger.info(body);
-          var usageCPU = (JSON.parse(body).results[0].series[0].values[0][1]);
+          var usageCPU = JSON.parse(body).results[0].series[0].values[0][1];
           response = {
             res: res.statusCode,
-            response: (usageCPU).toFixed(2) + " %"
+            response: usageCPU.toFixed(2)
           };
         }
         resolve(response);
@@ -169,7 +178,7 @@ exports.disk = function (from, to) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
-    var memoryT = config.server.diskMemory;
+    // var memoryT = config.server.diskMemory;
     var query;
     if (to) {
       if (from > to) {
@@ -179,28 +188,24 @@ exports.disk = function (from, to) {
         };
         reject(response);
       } else {
-        query = 'select mean("value") from "memory/usage" where "type" = \'pod\'  and time > \'' +
-          from.toISOString() + '\'';
-        ' and time <= \'' +
-        toDate.toISOString() +
-          '\'';
+        query = 'select mean("value") from "memory/usage" where "type" = \'pod\'  and time > \'' + from.toISOString() + "'";
+        " and time <= '" + toDate.toISOString() + "'";
         logger.info("query: " + query);
       }
     } else {
-      query = 'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' +
-        from.toISOString() + '\'';
+      query = 'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' + from.toISOString() + "'";
       logger.info("query: " + query);
     }
     var response;
     request({
-        method: 'POST',
+        method: "POST",
         url: config.data.apiInfluxdb,
         headers: {
           "content-type": "application/x-www-form-urlencoded"
         },
         form: {
           q: query,
-          db: 'k8s'
+          db: "k8s"
         }
       },
       (err, res, body) => {
@@ -218,7 +223,10 @@ exports.disk = function (from, to) {
           logger.info(body);
           response = {
             res: res.statusCode,
-            response: ((JSON.parse(body).results[0].series[0].values[0][1] / memoryT) * 100).toFixed(2) + " %"
+            response: {
+              value: (JSON.parse(body).results[0].series[0].values[0][1] * 1e-12).toFixed(2),
+              measurementUnit: "TB"
+            }
           };
         }
         resolve(response);
@@ -239,7 +247,7 @@ exports.memoryRam = function (from, to, node) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
-    var memoryT = config.server.ramMemory;
+    // var memoryT = config.server.ramMemory;
     var query;
     var gap;
     if (to) {
@@ -250,34 +258,37 @@ exports.memoryRam = function (from, to, node) {
         };
         reject(response);
       } else {
-        query = 'select mean("value") from "memory/usage" where "type" = \'pod\' and "pod_name" =~ /^' +
-          node +
-          '/ and time > \'' +
-          from.toISOString() + '\'';
-        ' and time <= \'' +
-        toDate.toISOString() +
-          '\'';
+        query =
+          'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' +
+          from.toISOString() +
+          "'" + " and time <= '" + toDate.toISOString() + "'";
+        if (node) {
+          query = query + 'and "pod_name" =~ /^' + node + "/";
+        }
         logger.info("query: " + query);
-        gap = toDate.diff(toDate, 'days') + 1;
+        gap = toDate.diff(toDate, "days") + 1;
       }
     } else {
-      query = 'select mean("value") from "memory/usage" where "type" = \'pod\' and "pod_name" =~ /^' +
-        node +
-        '/ and time > \'' +
-        from.toISOString() + '\'';
+      query =
+        'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' +
+        from.toISOString() +
+        "'";
+      if (node) {
+        query = query + 'and "pod_name" =~ /^' + node + "/";
+      }
       logger.info("query: " + query);
-      gap = toDate.diff(moment(), 'days') + 1;
+      gap = toDate.diff(moment(), "days") + 1;
     }
     var response;
     request({
-        method: 'POST',
+        method: "POST",
         url: config.data.apiInfluxdb,
         headers: {
           "content-type": "application/x-www-form-urlencoded"
         },
         form: {
           q: query,
-          db: 'k8s'
+          db: "k8s"
         }
       },
       (err, res, body) => {
@@ -295,7 +306,11 @@ exports.memoryRam = function (from, to, node) {
           logger.info(body);
           response = {
             res: res.statusCode,
-            response: ((JSON.parse(body).results[0].series[0].values[0][1] / memoryT) * 100).toFixed(2) + " %"
+            response: {
+              value: (JSON.parse(body).results[0].series[0].values[0][1] * 1e-9).toFixed(2),
+              measurementUnit: "GB"
+            }
+            // / memoryT) * 100).toFixed(2) + ' %'
           };
         }
         resolve(response);

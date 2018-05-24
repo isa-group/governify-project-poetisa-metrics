@@ -24,29 +24,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Put here your dependencies
  */
 
-const http = require("http"); // Use http if your app will be behind a proxy.
-const https = require("https"); // Use https if your app will not be behind a proxy.
-const bodyParser = require("body-parser");
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const compression = require("compression");
-const fs = require("fs");
-const path = require("path");
-const jsyaml = require("js-yaml");
-const swaggerTools = require("swagger-tools");
+const http = require('http'); // Use http if your app will be behind a proxy.
+const https = require('https'); // Use https if your app will not be behind a proxy.
+const bodyParser = require('body-parser');
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const fs = require('fs');
+const path = require('path');
+const jsyaml = require('js-yaml');
+const swaggerTools = require('swagger-tools');
 
 //Self dependencies
-const config = require("./configurations");
-const logger = require("./logger");
-const swaggerUtils = require("./utils/swagger");
+const config = require('./configurations');
+const logger = require('./logger');
+const swaggerUtils = require('./utils/swagger');
 
 let server = null;
 const app = express();
 
-const frontendPath = path.join(__dirname, "../frontend");
+const frontendPath = path.join(__dirname, '../frontend');
 const serverPort = process.env.PORT || config.server.port;
-const CURRENT_API_VERSION = "v1";
+const CURRENT_API_VERSION = 'v1';
 
 app.use(express.static(frontendPath));
 
@@ -58,14 +58,14 @@ logger.info("Using '%s' as HTTP body size", config.server.bodySize);
 app.use(
   bodyParser.urlencoded({
     limit: config.server.bodySize,
-    extended: "true"
+    extended: 'true'
   })
 );
 
 app.use(
   bodyParser.json({
     limit: config.server.bodySize,
-    type: "application/json"
+    type: 'application/json'
   })
 );
 
@@ -77,27 +77,27 @@ if (config.server.bypassCORS) {
 }
 
 if (config.server.useHelmet) {
-  logger.info("Adding Helmet related headers.");
+  logger.info('Adding Helmet related headers.');
   app.use(helmet());
 }
 
 if (config.server.httpOptionsOK) {
-  app.options("/*", function (req, res) {
-    logger.info("Bypassing 405 status put by swagger when no request handler is defined");
+  app.options('/*', function (req, res) {
+    logger.info('Bypassing 405 status put by swagger when no request handler is defined');
     return res.sendStatus(200);
   });
 }
 
 if (config.server.servePackageInfo) {
-  app.use("/api/info", function (req, res) {
-    logger.debug("Serving package.json at '%s'", "/api/info");
-    res.json(require("./../../package.json"));
+  app.use('/api/info', function (req, res) {
+    logger.debug("Serving package.json at '%s'", '/api/info');
+    res.json(require('./../../package.json'));
   });
 }
 
 // latest documentation redirection
-app.use("/api/latest/docs", function (req, res) {
-  res.redirect("/api/" + CURRENT_API_VERSION + "/docs");
+app.use('/api/latest/docs', function (req, res) {
+  res.redirect('/api/' + CURRENT_API_VERSION + '/docs');
 });
 
 module.exports = {
@@ -115,12 +115,12 @@ function _deploy(configurations, callback) {
   if (configurations && configurations.loggerLevel) {
     logger.transports.console.level = configurations.loggerLevel;
   }
-  logger.info("Trying to deploy server");
+  logger.info('Trying to deploy server');
   if (configurations) {
-    logger.info("Reading configuration...");
+    logger.info('Reading configuration...');
     for (var c in configurations) {
       var prop = configurations[c];
-      logger.info("Setting property" + c + " with value " + prop);
+      logger.info('Setting property' + c + ' with value ' + prop);
       config.setProperty(c, prop);
     }
   }
@@ -131,20 +131,20 @@ function _deploy(configurations, callback) {
     if (config.server.listenOnHttps) {
       https
         .createServer({
-            key: fs.readFileSync("certs/privkey.pem"),
-            cert: fs.readFileSync("certs/cert.pem")
+            key: fs.readFileSync('certs/privkey.pem'),
+            cert: fs.readFileSync('certs/cert.pem')
           },
           app
         )
         .listen(serverPort, function () {
-          logger.info("HTTPS_SERVER mode");
-          logger.info("Your server is listening on port %d (https://localhost:%d)", serverPort, serverPort);
-          logger.info("Swagger-ui is available on https://localhost:%d/api/%s/docs", serverPort, CURRENT_API_VERSION);
+          logger.info('HTTPS_SERVER mode');
+          logger.info('Your server is listening on port %d (https://localhost:%d)', serverPort, serverPort);
+          logger.info('Swagger-ui is available on https://localhost:%d/api/%s/docs', serverPort, CURRENT_API_VERSION);
         });
     } else {
       http.createServer(app).listen(serverPort, function () {
-        logger.info("Your server is listening on port %d (http://localhost:%d)", serverPort, serverPort);
-        logger.info("Swagger-ui is available on http://localhost:%d/api/%s/docs", serverPort, CURRENT_API_VERSION);
+        logger.info('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
+        logger.info('Swagger-ui is available on http://localhost:%d/api/%s/docs', serverPort, CURRENT_API_VERSION);
         if (callback) {
           callback(server);
         }
@@ -160,7 +160,7 @@ function _deploy(configurations, callback) {
  * */
 function _undeploy(callback) {
   server.close(function () {
-    logger.info("Server has been closed");
+    logger.info('Server has been closed');
     callback();
   });
 }

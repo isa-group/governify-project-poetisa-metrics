@@ -13,7 +13,7 @@ production:
 
   data:
     apiKuberntes: "http://192.168.65.3:6443/api/v1"
-    apiInfluxdb: "http://10.1.0.14:8086/query"
+    apiInfluxdb: "http://10.1.0.32:8086/query"
   
   log:
     level: info

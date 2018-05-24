@@ -17,14 +17,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-"use strict";
+'use strict';
 
 /**
  * Module dependencies.
  * */
 
-const winston = require("winston");
-const config = require("../configurations");
+const winston = require('winston');
+const config = require('../configurations');
 
 /**
  * Configure here your custom levels.
@@ -38,11 +38,11 @@ const customLevels = {
     debug: 13
   },
   colors: {
-    error: "red",
-    warning: "yellow",
-    info: "white",
-    test: "magenta",
-    debug: "black"
+    error: 'red',
+    warning: 'yellow',
+    info: 'white',
+    test: 'magenta',
+    debug: 'black'
   }
 };
 

@@ -1,8 +1,8 @@
 module.exports = {
-  extends: "standard",
+  extends: 'standard',
   overrides: [{
-    files: ["**/*.js"],
-    excludedFiles: "webpack.config.js"
+    files: ['**/*.js'],
+    excludedFiles: 'webpack.config.js'
   }],
   env: {
     node: true,

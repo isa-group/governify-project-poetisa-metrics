@@ -32,7 +32,7 @@ paths:
   #       default:
   #         description: "unexpected error"
   #     x-swagger-router-controller: "Default"
-  /PDN/{node}:
+  /PDN:
     get:
       description: "Returns the availability at a given time"
       operationId: "availability"
@@ -50,9 +50,9 @@ paths:
         type: "string"
         format: date
       - name: "node"
-        in: "path"
+        in: "query"
         description: "node of the system"
-        required: true
+        required: false
         type: "string"
       responses:
         200:
@@ -60,7 +60,7 @@ paths:
         default:
           description: "unexpected error"
       x-swagger-router-controller: "Default"
-  /CMN/{node}:
+  /CMM:
     get:
       description: "Returns a memory Ram"
       operationId: "memoryRam"
@@ -78,9 +78,9 @@ paths:
         type: "string"
         format: date
       - name: "node"
-        in: "path"
+        in: "query"
         description: "Average memory consumption of the node"
-        required: true
+        required: false
         type: "string"
       responses:
         200:
@@ -88,10 +88,9 @@ paths:
         default:
           description: "unexpected error"
       x-swagger-router-controller: "Default"
-  /CCN/{node}:
+  /CCN:
     get:
-      description: "Returns a user based on a single ID, if the user does not have\
-        \ access to the pet"
+      description: "CPU"
       operationId: "cpu"
       parameters:
       - name: "from"
@@ -105,10 +104,11 @@ paths:
         description: "to date yyyy-mm-dd"
         required: false
         type: "string"
+        format: date
       - name: "node"
-        in: "path"
+        in: "query"
         description: "Average memory consumption of the node"
-        required: true
+        required: false
         type: "string"
       responses:
         200:

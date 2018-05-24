@@ -17,11 +17,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 
-"use strict";
+'use strict';
 
-const fs = require("fs");
-const jsyaml = require("js-yaml");
-const swaggerTools = require("swagger-tools");
+const fs = require('fs');
+const jsyaml = require('js-yaml');
+const swaggerTools = require('swagger-tools');
 
 /**
  * Swagger module.
@@ -45,8 +45,8 @@ module.exports = {
  * */
 function _getRouterOption(version) {
   return {
-    swaggerUi: "/swaggerV" + version + ".json",
-    controllers: "./src/backend/controllers/v" + version
+    swaggerUi: '/swaggerV' + version + '.json',
+    controllers: './src/backend/controllers/v' + version
   };
 }
 
@@ -57,7 +57,7 @@ function _getRouterOption(version) {
  * @alias module:swagger.getSwaggerDoc
  * */
 function _getSwaggerDoc(version) {
-  let spec = fs.readFileSync("./src/backend/api/swaggerV" + version + ".yaml", "utf8");
+  let spec = fs.readFileSync('./src/backend/api/swaggerV' + version + '.yaml', 'utf8');
   return jsyaml.safeLoad(spec);
 }
 
@@ -84,8 +84,8 @@ function _initializeMiddleware(app, swaggerDocs, callback) {
       // Serve the Swagger documents and Swagger UI
       app.use(
         middleware.swaggerUi({
-          apiDocs: swaggerDoc.basePath + "/api-docs",
-          swaggerUi: swaggerDoc.basePath + "/docs"
+          apiDocs: swaggerDoc.basePath + '/api-docs',
+          swaggerUi: swaggerDoc.basePath + '/docs'
         })
       );
     });

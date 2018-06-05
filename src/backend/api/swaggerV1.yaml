@@ -4,7 +4,7 @@ info:
   description: "A sample API that uses a petstore as an example to demonstrate features\
     \ in the swagger-2.0 specification"
   version: "1.0.0"
-  title: "Swagger SLA"
+  title: "Swagger metrics"
   termsOfService: "http://helloreverb.com/terms/"
   contact:
     name: "ISA Research Group"

@@ -79,7 +79,10 @@ exports.availability = function (from, to, node) {
           var timeUp = JSON.parse(body).results[0].series[0].values[0][1] / 3600000 / 24;
           response = {
             res: res.statusCode,
-            response: (timeUp / gap).toFixed(2) + " %"
+            response: {
+              value: (timeUp / gap).toFixed(2),
+              unit: '%'
+            }
           };
         }
         resolve(response);

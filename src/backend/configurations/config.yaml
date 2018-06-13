@@ -13,7 +13,7 @@ production:
 
   data:
     apiKuberntes: "http://192.168.65.3:6443/api/v1"
-    apiInfluxdb: "http://10.1.0.50:8086/query"
+    apiInfluxdb: "http://10.1.0.76:8086/query"
   
   log:
     level: info
@@ -23,7 +23,7 @@ production:
 
 development:
   server: 
-    port: 5000
+    port: 30500
     timeout: 86400000
     bodySize: 50mb
     bypassCORS: true

@@ -53,13 +53,3 @@ module.exports.memoryRam = function memoryRam(req, res, next) {
       utils.writeJson(res, response);
     });
 };
-
-module.exports.getNodesOfKubernetes = function memoryRam(req, res, next) {
-  Default.getNodesOfKubernetes()
-    .then(response => {
-      utils.writeJson(res, response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-    });
-};

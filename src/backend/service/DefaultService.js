@@ -9,9 +9,9 @@ const logger = require("../logger");
 /**
  * Returns the availability at a given time
  *
- * from String from date
- * to String toal date
- * node String node of the system
+ * from is a string that represents the date from
+ * to is a string that represents the date to
+ * node is a string than represents the name of a pod in the system
  * no response value expected for this operation
  **/
 exports.availability = function (from, to, node) {
@@ -94,9 +94,9 @@ exports.availability = function (from, to, node) {
 /**
  * Returns a user based on a single ID, if the user does not have access to the pet
  *
- * from String from date
- * to String toal date
- * node String Average memory consumption of the node
+ * from is a string that represents the date from
+ * to is a string that represents the date to
+ * node is a string than represents the name of a pod in the system
  * no response value expected for this operation
  **/
 exports.cpu = function (from, to, node) {
@@ -172,9 +172,8 @@ exports.cpu = function (from, to, node) {
 /**
  * Returns a user based on a single ID, if the user does not have access to the pet
  *
- * from String from date
- * to String toal date
- * node String Occupied disk space on a node
+ * from is a string that represents the date from
+ * to is a string that represents the date to
  * no response value expected for this operation
  **/
 exports.disk = function (from, to) {
@@ -241,9 +240,9 @@ exports.disk = function (from, to) {
 /**
  * Returns a user based on a single ID, if the user does not have access to the pet
  *
- * from String from date
- * to String toal date
- * node String Average memory consumption of the node
+ * from is a string that represents the date from
+ * to is a string that represents the date to
+ * node is a string than represents the name of a pod in the system
  * no response value expected for this operation
  **/
 exports.memoryRam = function (from, to, node) {

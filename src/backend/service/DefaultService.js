@@ -16,7 +16,7 @@ const logger = require("../logger");
  **/
 exports.availability = function (from, to, node) {
   return new Promise(function (resolve, reject) {
-    var fromDate = moment(from);
+    // var fromDate = moment(from);
     var toDate = moment(to);
     var gap;
     var query;
@@ -29,23 +29,23 @@ exports.availability = function (from, to, node) {
         reject(response);
       } else {
         query =
-          'select mean("value") from "uptime" where "type" = \'pod\' and time > \'' +
+          'select mean("value") from "uptime" where and time > \'' +
           from.toISOString() +
           "'";
         " and time <= '" + toDate.toISOString() + "'";
         if (node) {
-          query = query + 'and "pod_name" =~ /^' + node + "/";
+          query = query + 'and "nodename" =~ /^' + node + "/";
         }
         logger.info("query: " + query);
         gap = toDate.diff(toDate, "days") + 1;
       }
     } else {
       query =
-        'select mean("value") from "uptime" where "type" = \'pod\' and time > \'' +
+        'select mean("value") from "uptime" where and time > \'' +
         from.toISOString() +
         "'";
       if (node) {
-        query = query + 'and "pod_name" =~ /^' + node + "/";
+        query = query + 'and "nodename" =~ /^' + node + "/";
       }
       logger.info("query: " + query);
       gap = toDate.diff(moment(), "days") + 1;
@@ -114,21 +114,21 @@ exports.cpu = function (from, to, node) {
         reject(response);
       } else {
         query =
-          'select mean("value") from "cpu/usage_rate" where "type" = \'pod\' and time > \'' +
+          'select mean("value") from "cpu/usage_rate" where and time > \'' +
           from.toISOString() +
           "' and time <= '" + toDate.toISOString() + "'";
         if (node) {
-          query = query + 'and "pod_name" =~ /^' + node + "/";
+          query = query + 'and "nodename" =~ /^' + node + "/";
         }
         logger.info("query: " + query);
       }
     } else {
       query =
-        'select mean("value") from "cpu/usage_rate" where "type" = \'pod\' and time > \'' +
+        'select mean("value") from "cpu/usage_rate" where and time > \'' +
         from.toISOString() +
         "'";
       if (node) {
-        query = query + 'and "pod_name" =~ /^' + node + "/";
+        query = query + 'and "nodename" =~ /^' + node + "/";
       }
       logger.info("query: " + query);
     }
@@ -190,12 +190,12 @@ exports.disk = function (from, to) {
         };
         reject(response);
       } else {
-        query = 'select mean("value") from "memory/usage" where "type" = \'pod\'  and time > \'' + from.toISOString() + "'";
+        query = 'select mean("value") from "memory/usage" where  and time > \'' + from.toISOString() + "'";
         " and time <= '" + toDate.toISOString() + "'";
         logger.info("query: " + query);
       }
     } else {
-      query = 'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' + from.toISOString() + "'";
+      query = 'select mean("value") from "memory/usage" where and time > \'' + from.toISOString() + "'";
       logger.info("query: " + query);
     }
     var response;
@@ -261,22 +261,22 @@ exports.memoryRam = function (from, to, node) {
         reject(response);
       } else {
         query =
-          'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' +
+          'select mean("value") from "memory/usage" where and time > \'' +
           from.toISOString() +
           "'" + " and time <= '" + toDate.toISOString() + "'";
         if (node) {
-          query = query + 'and "pod_name" =~ /^' + node + "/";
+          query = query + 'and "nodename" =~ /^' + node + "/";
         }
         logger.info("query: " + query);
         gap = toDate.diff(toDate, "days") + 1;
       }
     } else {
       query =
-        'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' +
+        'select mean("value") from "memory/usage" where and time > \'' +
         from.toISOString() +
         "'";
       if (node) {
-        query = query + 'and "pod_name" =~ /^' + node + "/";
+        query = query + 'and "nodename" =~ /^' + node + "/";
       }
       logger.info("query: " + query);
       gap = toDate.diff(moment(), "days") + 1;

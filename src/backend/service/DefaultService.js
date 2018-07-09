@@ -29,7 +29,7 @@ exports.availability = function (from, to, node) {
         reject(response);
       } else {
         query =
-          'select mean("value") from "uptime" where and time > \'' +
+          'select mean("value") from "uptime" where time > \'' +
           from.toISOString() +
           "'";
         " and time <= '" + toDate.toISOString() + "'";
@@ -41,7 +41,7 @@ exports.availability = function (from, to, node) {
       }
     } else {
       query =
-        'select mean("value") from "uptime" where and time > \'' +
+        'select mean("value") from "uptime" where  time > \'' +
         from.toISOString() +
         "'";
       if (node) {
@@ -114,7 +114,7 @@ exports.cpu = function (from, to, node) {
         reject(response);
       } else {
         query =
-          'select mean("value") from "cpu/usage_rate" where and time > \'' +
+          'select mean("value") from "cpu/usage_rate" where time > \'' +
           from.toISOString() +
           "' and time <= '" + toDate.toISOString() + "'";
         if (node) {
@@ -124,7 +124,7 @@ exports.cpu = function (from, to, node) {
       }
     } else {
       query =
-        'select mean("value") from "cpu/usage_rate" where and time > \'' +
+        'select mean("value") from "cpu/usage_rate" where time > \'' +
         from.toISOString() +
         "'";
       if (node) {
@@ -195,7 +195,7 @@ exports.disk = function (from, to) {
         logger.info("query: " + query);
       }
     } else {
-      query = 'select mean("value") from "memory/usage" where and time > \'' + from.toISOString() + "'";
+      query = 'select mean("value") from "memory/usage" where time > \'' + from.toISOString() + "'";
       logger.info("query: " + query);
     }
     var response;
@@ -261,7 +261,7 @@ exports.memoryRam = function (from, to, node) {
         reject(response);
       } else {
         query =
-          'select mean("value") from "memory/usage" where and time > \'' +
+          'select mean("value") from "memory/usage" where time > \'' +
           from.toISOString() +
           "'" + " and time <= '" + toDate.toISOString() + "'";
         if (node) {
@@ -272,7 +272,7 @@ exports.memoryRam = function (from, to, node) {
       }
     } else {
       query =
-        'select mean("value") from "memory/usage" where and time > \'' +
+        'select mean("value") from "memory/usage" where time > \'' +
         from.toISOString() +
         "'";
       if (node) {

@@ -190,7 +190,7 @@ exports.disk = function (from, to) {
         };
         reject(response);
       } else {
-        query = 'select mean("value") from "memory/usage" where  and time > \'' + from.toISOString() + "'";
+        query = 'select mean("value") from "memory/usage" where time > \'' + from.toISOString() + "'";
         " and time <= '" + toDate.toISOString() + "'";
         logger.info("query: " + query);
       }
@@ -312,7 +312,6 @@ exports.memoryRam = function (from, to, node) {
               value: (JSON.parse(body).results[0].series[0].values[0][1] * 1e-9).toFixed(2),
               measurementUnit: "GB"
             }
-            // / memoryT) * 100).toFixed(2) + ' %'
           };
         }
         resolve(response);

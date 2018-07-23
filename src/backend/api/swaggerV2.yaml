@@ -1,0 +1,211 @@
+---
+swagger: "2.0"
+info:
+  description: "A sample API that uses a petstore as an example to demonstrate features\
+    \ in the swagger-2.0 specification"
+  version: "2.0.0"
+  title: "Swagger metrics"
+  termsOfService: "http://helloreverb.com/terms/"
+  contact:
+    name: "ISA Research Group"
+    url: "http://www.isa.us.es/"
+    email: "isagroup.us@gmail.com"
+  license:
+    name: "MIT"
+    url: "http://opensource.org/licenses/MIT"
+host: "localhost:5001"
+basePath: "/api/v2"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /AVA:
+    get:
+      description: "Returns the average availability"
+      operationId: "avgAvailability"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+        format: date
+      - name: "node"
+        in: "query"
+        description: "node of the system"
+        required: false
+        type: "string"
+      - name: "namespace"
+        in: "query"
+        description: "namespace of the system"
+        required: false
+        type: "string"
+      - name: "pod_name"
+        in: "query"
+        description: "pod of the system"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "availability of the node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"
+  /AMC:
+    get:
+      description: "Returns a average memory consumption"
+      operationId: "avgMemoryRam"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+        format: date
+      - name: "node"
+        in: "query"
+        description: "Average memory consumption of the node"
+        required: false
+        type: "string"
+      - name: "pod_name"
+        in: "query"
+        description: "Average memory consumption of the pod"
+        type: "string"
+      - name: "namespace"
+        in: "query"
+        description: "Average memory consumption of the namespace"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Average memory consumption of the node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"
+  /ACL:
+    get:
+      description: "Average cpu load"
+      operationId: "cpuLoad"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+        format: date
+      - name: "node"
+        in: "query"
+        description: "Average memory consumption of the node"
+        required: false
+        type: "string"
+      - name: "namespace"
+        in: "query"
+        description: "Average memory consumption of the node"
+        type: "string"
+      - name: "pod_name"
+        in: "query"
+        description: "Average memory consumption of the node"
+        type: "string"
+      responses:
+        200:
+          description: "Average memory consumption of the node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"
+  /ODS:
+    get:
+      description: "Returns Occupied disk space"
+      operationId: "diskSpace"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+        format: date
+      - name: "node"
+        required: false
+        in: "query"
+        type: "string"
+        description: "Average memory consumption of the disk"
+      - name: "pod_name"
+        required: false
+        in: "query"
+        type: "string"
+        description: "Average memory consumption of the disk"
+      - name: "namespace"
+        required: false
+        in: "query"
+        type: "string"
+        description: "Average memory consumption of the disk"
+      responses:
+        200:
+          description: "Occupied disk space on a node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"
+  /PN:
+    get:
+      description: "Pod Number"
+      operationId: "podNumber"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "from date yyyy-mm-dd"
+        required: true
+        type: "string"
+        format: date
+      - name: "to"
+        in: "query"
+        description: "to date yyyy-mm-dd"
+        required: false
+        type: "string"
+        format: date
+      - name: "node"
+        required: false
+        in: "query"
+        type: "string"
+        description: "Average memory consumption of the node"
+      - name: "namespace"
+        required: false
+        in: "query"
+        type: "string"
+        description: "Average memory consumption of the node"
+      - name: "pod_name"
+        required: false
+        in: "query"
+        type: "string"
+        description: "Average memory consumption of the node"
+      responses:
+        200:
+          description: "Occupied disk space on a node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"

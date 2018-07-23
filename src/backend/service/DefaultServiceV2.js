@@ -14,12 +14,12 @@ const logger = require("../logger");
  * node is a string than represents the name of a pod in the system
  * no response value expected for this operation
  **/
-exports.availability = function (from, to, node) {
+exports.avgAvailability = function (from, to, node, namespace, pod_name) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
     var gap;
-    var query;
+    var query = 'select mean("value") from "uptime" where time > \'' + fromDate.toISOString() + "'";
     if (to) {
       if (from > to) {
         response = {
@@ -28,28 +28,20 @@ exports.availability = function (from, to, node) {
         };
         reject(response);
       } else {
-        query =
-          'select mean("value") from "uptime" where "type" = \'pod\' and time > \'' +
-          from.toISOString() +
-          "'";
-        " and time <= '" + toDate.toISOString() + "'";
-        if (node) {
-          query = query + 'and "pod_name" =~ /^' + node + "/";
-        }
+        query = query + " and time <= '" + toDate.toISOString() + "'";
+        query = buildQuery(query, node, pod_name, namespace);
         logger.info("query: " + query);
         gap = toDate.diff(toDate, "days") + 1;
       }
     } else {
-      query =
-        'select mean("value") from "uptime" where "type" = \'pod\' and time > \'' +
-        from.toISOString() +
-        "'";
-      if (node) {
-        query = query + 'and "pod_name" =~ /^' + node + "/";
-      }
+      query = buildQuery(query, node, pod_name, namespace);
       logger.info("query: " + query);
       gap = toDate.diff(moment(), "days") + 1;
     }
+    query = query.replace(/&amp;/g, "&")
+      .replace(/&gt;/g, ">")
+      .replace(/&lt;/g, "<")
+      .replace(/&quot;/g, '"');
     var response;
     request({
         method: "POST",
@@ -99,12 +91,11 @@ exports.availability = function (from, to, node) {
  * node is a string than represents the name of a pod in the system
  * no response value expected for this operation
  **/
-exports.cpu = function (from, to, node) {
+exports.cpuLoad = function (from, to, node, namespace, pod_name) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
-    // var gap;
-    var query;
+    var query = 'select mean("value") from "cpu/usage_rate" where time > \'' + fromDate.toISOString() + "'";
     if (to) {
       if (from > to) {
         response = {
@@ -113,25 +104,18 @@ exports.cpu = function (from, to, node) {
         };
         reject(response);
       } else {
-        query =
-          'select mean("value") from "cpu/usage_rate" where "type" = \'pod\' and time > \'' +
-          from.toISOString() +
-          "' and time <= '" + toDate.toISOString() + "'";
-        if (node) {
-          query = query + 'and "pod_name" =~ /^' + node + "/";
-        }
+        query = query + " and time <= '" + toDate.toISOString() + "'";
+        query = buildQuery(query, node, pod_name, namespace);
         logger.info("query: " + query);
       }
     } else {
-      query =
-        'select mean("value") from "cpu/usage_rate" where "type" = \'pod\' and time > \'' +
-        from.toISOString() +
-        "'";
-      if (node) {
-        query = query + 'and "pod_name" =~ /^' + node + "/";
-      }
+      query = buildQuery(query, node, pod_name, namespace);
       logger.info("query: " + query);
     }
+    query = query.replace(/&amp;/g, "&")
+      .replace(/&gt;/g, ">")
+      .replace(/&lt;/g, "<")
+      .replace(/&quot;/g, '"');
     var response;
     request({
         method: "POST",
@@ -176,12 +160,11 @@ exports.cpu = function (from, to, node) {
  * to is a string that represents the date to
  * no response value expected for this operation
  **/
-exports.disk = function (from, to) {
+exports.diskSpace = function (from, to, node, pod_name, namespace) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
-    // var memoryT = config.server.diskMemory;
-    var query;
+    var query = 'select mean("value") from "memory/usage" where time > \'' + fromDate.toISOString() + "'";
     if (to) {
       if (from > to) {
         response = {
@@ -190,14 +173,18 @@ exports.disk = function (from, to) {
         };
         reject(response);
       } else {
-        query = 'select mean("value") from "memory/usage" where "type" = \'pod\'  and time > \'' + from.toISOString() + "'";
-        " and time <= '" + toDate.toISOString() + "'";
+        query = query + " and time <= '" + toDate.toISOString() + "'";
+        query = buildQuery(query, node, pod_name, namespace);
         logger.info("query: " + query);
       }
     } else {
-      query = 'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' + from.toISOString() + "'";
+      query = buildQuery(query, node, pod_name, namespace);
       logger.info("query: " + query);
     }
+    query = query.replace(/&amp;/g, "&")
+      .replace(/&gt;/g, ">")
+      .replace(/&lt;/g, "<")
+      .replace(/&quot;/g, '"');
     var response;
     request({
         method: "POST",
@@ -245,13 +232,11 @@ exports.disk = function (from, to) {
  * node is a string than represents the name of a pod in the system
  * no response value expected for this operation
  **/
-exports.memoryRam = function (from, to, node) {
+exports.avgMemoryRam = function (from, to, node, namespace, pod_name) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
-    // var memoryT = config.server.ramMemory;
-    var query;
-    var gap;
+    var query = 'select mean("value") from "memory/usage" where time > \'' + fromDate.toISOString() + "'";
     if (to) {
       if (from > to) {
         response = {
@@ -260,27 +245,18 @@ exports.memoryRam = function (from, to, node) {
         };
         reject(response);
       } else {
-        query =
-          'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' +
-          from.toISOString() +
-          "'" + " and time <= '" + toDate.toISOString() + "'";
-        if (node) {
-          query = query + 'and "pod_name" =~ /^' + node + "/";
-        }
+        query = query + ' and time <= \'' + toDate.toISOString() + '\'';
+        query = buildQuery(query, node, pod_name, namespace);
         logger.info("query: " + query);
-        gap = toDate.diff(toDate, "days") + 1;
       }
     } else {
-      query =
-        'select mean("value") from "memory/usage" where "type" = \'pod\' and time > \'' +
-        from.toISOString() +
-        "'";
-      if (node) {
-        query = query + 'and "pod_name" =~ /^' + node + "/";
-      }
+      query = buildQuery(query, node, pod_name, namespace);
       logger.info("query: " + query);
-      gap = toDate.diff(moment(), "days") + 1;
     }
+    query = query.replace(/&amp;/g, "&")
+      .replace(/&gt;/g, ">")
+      .replace(/&lt;/g, "<")
+      .replace(/&quot;/g, '"');
     var response;
     request({
         method: "POST",
@@ -310,13 +286,88 @@ exports.memoryRam = function (from, to, node) {
             res: res.statusCode,
             response: {
               value: (JSON.parse(body).results[0].series[0].values[0][1] * 1e-9).toFixed(2),
-              measurementUnit: "GB"
+              measurementUnit: 'GB'
             }
-            // / memoryT) * 100).toFixed(2) + ' %'
           };
         }
         resolve(response);
-      }
-    );
+      });
   });
+};
+
+exports.podNumber = function (from, to, node, namespace, pod_name) {
+  return new Promise(function (resolve, reject) {
+    var fromDate = moment(from);
+    var toDate = moment(to);
+    var query = 'select * from restart_count where time > \'' + from.toISOString() + "'";
+    if (to) {
+      if (from > to) {
+        response = {
+          res: 400,
+          response: "from is bigger that end"
+        };
+        reject(response);
+      } else {
+        query = query + " and time <= '" + toDate.toISOString() + "'";
+        query = buildQuery(query, node, pod_name, namespace);
+        logger.info("query: " + query);
+      }
+    } else {
+      query = buildQuery(query, node, pod_name, namespace);
+      logger.info("query: " + query);
+    }
+    query = query + 'group by "pod_name"';
+    query = query.replace(/&amp;/g, "&")
+      .replace(/&gt;/g, ">")
+      .replace(/&lt;/g, "<")
+      .replace(/&quot;/g, '"');
+    var response;
+    request({
+        method: "POST",
+        url: config.data.apiInfluxdb,
+        headers: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        form: {
+          q: query,
+          db: "k8s"
+        }
+      },
+      (err, res, body) => {
+        if (err) {
+          logger.error(err);
+          reject(err);
+        }
+        if (body === '{"results":[{"statement_id":0}]}\n') {
+          response = {
+            res: res.statusCode,
+            response: "Please check the parameters, as no information is found "
+          };
+        } else {
+          logger.info(res.statusCode);
+          // logger.info(body);
+          response = {
+            res: res.statusCode,
+            response: {
+              value: JSON.parse(body).results[0].series.length,
+            }
+          };
+        }
+        resolve(response);
+      });
+  });
+}
+
+
+var buildQuery = (query, node, pod_name, namespace) => {
+  if (node) {
+    query = query + ' and "nodename" =~ /^' + node + "/";
+  };
+  if (pod_name) {
+    query = query + ' and "pod_name" =~ /^' + pod_name + "/";
+  };
+  if (namespace) {
+    query = query + ' and "namespace" =~ /^' + namespace + "/";
+  };
+  return (query);
 };

@@ -297,9 +297,8 @@ exports.avgMemoryRam = function (from, to, node, namespace, pod_name) {
 
 exports.podNumber = function (from, to, node, namespace, pod_name) {
   return new Promise(function (resolve, reject) {
-    var fromDate = moment(from);
     var toDate = moment(to);
-    var query = 'select * from restart_count where time > \'' + from.toISOString() + "'";
+    var query = 'SELECT distinct(*) FROM "restart_count" WHERE time > \'' + from.toISOString() + '\'';
     if (to) {
       if (from > to) {
         response = {
@@ -308,15 +307,17 @@ exports.podNumber = function (from, to, node, namespace, pod_name) {
         };
         reject(response);
       } else {
-        query = query + " and time <= '" + toDate.toISOString() + "'";
+        query = query + ' and time <= \'' + toDate.toISOString() + '\'';
         query = buildQuery(query, node, pod_name, namespace);
+        query = query + " GROUP BY time(30d);";
         logger.info("query: " + query);
       }
     } else {
       query = buildQuery(query, node, pod_name, namespace);
+      query = query + ' GROUP BY time(30d);';
       logger.info("query: " + query);
     }
-    query = query + 'group by "pod_name"';
+    // query = query + ' GROUP BY time(30d);';
     query = query.replace(/&amp;/g, "&")
       .replace(/&gt;/g, ">")
       .replace(/&lt;/g, "<")
@@ -345,11 +346,12 @@ exports.podNumber = function (from, to, node, namespace, pod_name) {
           };
         } else {
           logger.info(res.statusCode);
-          // logger.info(body);
+          var size = JSON.parse(body).results[0].series[0].values.length;
+          logger.info(size);
           response = {
             res: res.statusCode,
             response: {
-              value: JSON.parse(body).results[0].series.length,
+              value: size,
             }
           };
         }

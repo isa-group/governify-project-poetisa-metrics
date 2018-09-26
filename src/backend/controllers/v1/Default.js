@@ -119,7 +119,7 @@ module.exports.podNumber = function podNumber(req, res, next) {
   var node = req.swagger.params['node'].value;
   var namespace = req.swagger.params['namespace'].value;
   var pod_name = req.swagger.params['pod_name'].value;
-  DefaultV2.podNumber(from, to, node)
+  DefaultV2.podNumber(from, to, node, namespace, pod_name)
     .then(response => {
       utils.writeJson(res, response, node, namespace, pod_name);
     })

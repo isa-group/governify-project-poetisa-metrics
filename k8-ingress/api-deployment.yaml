@@ -2,17 +2,17 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: api-metrics
-  name: api-metrics
+    app: k-minion1
+  name: k-minion1
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: api-metrics
+        app: k-minion1
     spec:
       containers:
-      - name: api-metrics
+      - name: k-minion1
         image: api_ans_poetisa
         imagePullPolicy: IfNotPresent
         ports:

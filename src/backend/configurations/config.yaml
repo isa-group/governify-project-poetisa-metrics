@@ -1,5 +1,5 @@
 production:
-  server: 
+  server:
     port: 80
     timeout: 86400000
     bodySize: 50mb
@@ -9,20 +9,20 @@ production:
     servePackageInfo: true
     listenOnHttps: false
     diskMemory: 2000000000
-    ramMemory:  20000000
+    ramMemory: 20000000
 
   data:
-    apiInfluxdb: "http://10.1.0.90:8086/query"
-  
+    apiInfluxdb: "http://10.109.183.118:8086/query"
+
   log:
     level: info
-    file: './logs/prod-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    file: "./logs/prod-logs.log" #Where log file will be saved. Date will be concatenated before the name.
     maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
     maxFiles: 30 # Max Files that can be created per day reaching the maxSize.
 
 development:
-  server: 
-    port: 30500
+  server:
+    port: 5001
     timeout: 86400000
     bodySize: 50mb
     bypassCORS: true
@@ -31,14 +31,14 @@ development:
     servePackageInfo: true
     listenOnHttps: false
     diskMemory: 2000000000
-    ramMemory:  20000000
-  
+    ramMemory: 20000000
+
   data:
     apiInfluxdb: "http://localhost:30086/query"
-    
+
   log:
     level: debug
-    file: './logs/dev-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    file: "./logs/dev-logs.log" #Where log file will be saved. Date will be concatenated before the name.
     maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
     maxFiles: 30 # Max Files that can be created per day reaching the maxSize.
 
@@ -53,19 +53,19 @@ testing:
     servePackageInfo: true
     listenOnHttps: false
     diskMemory: 2000000000
-    ramMemory:  20000000
+    ramMemory: 20000000
 
   eslint:
     ignore:
-      - ''
-      - ''
-  
+      - ""
+      - ""
+
   data:
     apiInfluxdb: "http://localhost:30086/query"
 
   log:
     level: debug
-    file: './logs/test-logs.log' #Where log file will be saved. Date will be concatenated before the name.
+    file: "./logs/test-logs.log" #Where log file will be saved. Date will be concatenated before the name.
     maxSize: 10000000 #(10MB) Maximum file log size, if one file reaches it, a new file is created.
     maxFiles: 30 # Max Files that can be created per day reaching the maxSize.
-  
+

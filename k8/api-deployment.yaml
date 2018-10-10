@@ -12,9 +12,8 @@ spec:
         app: api-metrics
     spec:
       containers:
-      - name: api-metrics
-        image: api_ans_poetisa
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 80
-
+        - name: api-metrics
+          image: api_metrics_poetisa
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80

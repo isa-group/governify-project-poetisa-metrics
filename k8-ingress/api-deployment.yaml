@@ -12,9 +12,8 @@ spec:
         app: k-minion1
     spec:
       containers:
-      - name: k-minion1
-        image: api_ans_poetisa
-        imagePullPolicy: IfNotPresent
-        ports:
-        - containerPort: 80
-
+        - name: k-minion1
+          image: api_metrics_poetisa
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80

@@ -68,7 +68,7 @@ exports.availability = function (from, to, node) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {
@@ -150,7 +150,7 @@ exports.cpu = function (from, to, node) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {
@@ -216,7 +216,7 @@ exports.disk = function (from, to) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {
@@ -299,7 +299,7 @@ exports.memoryRam = function (from, to, node) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {

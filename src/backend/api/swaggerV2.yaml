@@ -1,4 +1,3 @@
----
 swagger: "2.0"
 info:
   description: "A sample API that uses a petstore as an example to demonstrate features\
@@ -13,47 +12,47 @@ info:
   license:
     name: "MIT"
     url: "http://opensource.org/licenses/MIT"
-host: "localhost:5001"
+host: "localhost:30500"
 basePath: "/api/v2"
 schemes:
-- "http"
+  - "http"
 consumes:
-- "application/json"
+  - "application/json"
 produces:
-- "application/json"
+  - "application/json"
 paths:
   /AVA:
     get:
       description: "Returns the average availability"
       operationId: "avgAvailability"
       parameters:
-      - name: "from"
-        in: "query"
-        description: "from date yyyy-mm-dd"
-        required: true
-        type: "string"
-        format: date
-      - name: "to"
-        in: "query"
-        description: "to date yyyy-mm-dd"
-        required: false
-        type: "string"
-        format: date
-      - name: "node"
-        in: "query"
-        description: "node of the system"
-        required: false
-        type: "string"
-      - name: "namespace"
-        in: "query"
-        description: "namespace of the system"
-        required: false
-        type: "string"
-      - name: "pod_name"
-        in: "query"
-        description: "pod of the system"
-        required: false
-        type: "string"
+        - name: "from"
+          in: "query"
+          description: "from date yyyy-mm-dd"
+          required: true
+          type: "string"
+          format: date
+        - name: "to"
+          in: "query"
+          description: "to date yyyy-mm-dd"
+          required: false
+          type: "string"
+          format: date
+        - name: "node"
+          in: "query"
+          description: "node of the system"
+          required: false
+          type: "string"
+        - name: "namespace"
+          in: "query"
+          description: "namespace of the system"
+          required: false
+          type: "string"
+        - name: "pod_name"
+          in: "query"
+          description: "pod of the system"
+          required: false
+          type: "string"
       responses:
         200:
           description: "availability of the node"
@@ -65,32 +64,32 @@ paths:
       description: "Returns a average memory consumption"
       operationId: "avgMemoryRam"
       parameters:
-      - name: "from"
-        in: "query"
-        description: "from date yyyy-mm-dd"
-        required: true
-        type: "string"
-        format: date
-      - name: "to"
-        in: "query"
-        description: "to date yyyy-mm-dd"
-        required: false
-        type: "string"
-        format: date
-      - name: "node"
-        in: "query"
-        description: "Average memory consumption of the node"
-        required: false
-        type: "string"
-      - name: "pod_name"
-        in: "query"
-        description: "Average memory consumption of the pod"
-        type: "string"
-      - name: "namespace"
-        in: "query"
-        description: "Average memory consumption of the namespace"
-        required: false
-        type: "string"
+        - name: "from"
+          in: "query"
+          description: "from date yyyy-mm-dd"
+          required: true
+          type: "string"
+          format: date
+        - name: "to"
+          in: "query"
+          description: "to date yyyy-mm-dd"
+          required: false
+          type: "string"
+          format: date
+        - name: "node"
+          in: "query"
+          description: "Average memory consumption of the node"
+          required: false
+          type: "string"
+        - name: "pod_name"
+          in: "query"
+          description: "Average memory consumption of the pod"
+          type: "string"
+        - name: "namespace"
+          in: "query"
+          description: "Average memory consumption of the namespace"
+          required: false
+          type: "string"
       responses:
         200:
           description: "Average memory consumption of the node"
@@ -102,69 +101,69 @@ paths:
       description: "Average cpu load"
       operationId: "cpuLoad"
       parameters:
-      - name: "from"
-        in: "query"
-        description: "from date yyyy-mm-dd"
-        required: true
-        type: "string"
-        format: date
-      - name: "to"
-        in: "query"
-        description: "to date yyyy-mm-dd"
-        required: false
-        type: "string"
-        format: date
-      - name: "node"
-        in: "query"
-        description: "Average memory consumption of the node"
-        required: false
-        type: "string"
-      - name: "namespace"
-        in: "query"
-        description: "Average memory consumption of the node"
-        type: "string"
-      - name: "pod_name"
-        in: "query"
-        description: "Average memory consumption of the node"
-        type: "string"
+        - name: "from"
+          in: "query"
+          description: "from date yyyy-mm-dd"
+          required: true
+          type: "string"
+          format: date
+        - name: "to"
+          in: "query"
+          description: "to date yyyy-mm-dd"
+          required: false
+          type: "string"
+          format: date
+        - name: "node"
+          in: "query"
+          description: "Average memory consumption of the node"
+          required: false
+          type: "string"
+        - name: "namespace"
+          in: "query"
+          description: "Average memory consumption of the node"
+          type: "string"
+        - name: "pod_name"
+          in: "query"
+          description: "Average memory consumption of the node"
+          type: "string"
       responses:
         200:
           description: "Average memory consumption of the node"
         default:
           description: "unexpected error"
       x-swagger-router-controller: "Default"
-  /ODS:
+  /DU:
     get:
-      description: "Returns Occupied disk space"
+      description: "Discl usage"
       operationId: "diskSpace"
       parameters:
-      - name: "from"
-        in: "query"
-        description: "from date yyyy-mm-dd"
-        required: true
-        type: "string"
-        format: date
-      - name: "to"
-        in: "query"
-        description: "to date yyyy-mm-dd"
-        required: false
-        type: "string"
-        format: date
-      - name: "node"
-        required: false
-        in: "query"
-        type: "string"
-        description: "Average memory consumption of the disk"
-      - name: "pod_name"
-        required: false
-        in: "query"
-        type: "string"
-        description: "Average memory consumption of the disk"
-      - name: "namespace"
-        required: false
-        in: "query"
-        type: "string"
-        description: "Average memory consumption of the disk"
+        - name: "from"
+          in: "query"
+          description: "from date yyyy-mm-dd"
+          required: true
+          type: "string"
+          format: date
+        - name: "to"
+          in: "query"
+          description: "to date yyyy-mm-dd"
+          required: false
+          type: "string"
+          format: date
+        - name: "node"
+          required: false
+          in: "query"
+          type: "string"
+          description: "Average memory consumption of the disk"
+        - name: "pod_name"
+          required: false
+          in: "query"
+          type: "string"
+          description: "Average memory consumption of the disk"
+        - name: "namespace"
+          required: false
+          in: "query"
+          type: "string"
+          description: "Average memory consumption of the disk"
       responses:
         200:
           description: "Occupied disk space on a node"
@@ -176,36 +175,59 @@ paths:
       description: "Pod Number"
       operationId: "podNumber"
       parameters:
-      - name: "from"
-        in: "query"
-        description: "from date yyyy-mm-dd"
-        required: true
-        type: "string"
-        format: date
-      - name: "to"
-        in: "query"
-        description: "to date yyyy-mm-dd"
-        required: false
-        type: "string"
-        format: date
-      - name: "node"
-        required: false
-        in: "query"
-        type: "string"
-        description: "Average memory consumption of the node"
-      - name: "namespace"
-        required: false
-        in: "query"
-        type: "string"
-        description: "Average memory consumption of the node"
-      - name: "pod_name"
-        required: false
-        in: "query"
-        type: "string"
-        description: "Average memory consumption of the node"
+        - name: "from"
+          in: "query"
+          description: "from date yyyy-mm-dd"
+          required: true
+          type: "string"
+          format: date
+        - name: "to"
+          in: "query"
+          description: "to date yyyy-mm-dd"
+          required: false
+          type: "string"
+          format: date
+        - name: "node"
+          required: false
+          in: "query"
+          type: "string"
+          description: "Name of node"
+        - name: "namespace"
+          required: false
+          in: "query"
+          type: "string"
+          description: "Namespace of the pod"
+        - name: "pod_name"
+          required: false
+          in: "query"
+          type: "string"
+          description: "Name of the nodes"
       responses:
         200:
           description: "Occupied disk space on a node"
+        default:
+          description: "unexpected error"
+      x-swagger-router-controller: "Default"
+  /ND:
+    get:
+      description: "Number de days"
+      operationId: "numberDays"
+      parameters:
+        - name: "from"
+          in: "query"
+          description: "from date yyyy-mm-dd"
+          required: true
+          type: "string"
+          format: date
+        - name: "to"
+          in: "query"
+          description: "to date yyyy-mm-dd"
+          required: true
+          type: "string"
+          format: date
+      responses:
+        200:
+          description: "Average memory consumption of the node"
         default:
           description: "unexpected error"
       x-swagger-router-controller: "Default"

@@ -61,7 +61,7 @@ exports.avgAvailability = function (from, to, node, namespace, pod_name) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {
@@ -135,7 +135,7 @@ exports.cpuLoad = function (from, to, node, namespace, pod_name) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {
@@ -204,7 +204,7 @@ exports.diskSpace = function (from, to, node, pod_name, namespace) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {
@@ -276,7 +276,7 @@ exports.avgMemoryRam = function (from, to, node, namespace, pod_name) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {
@@ -341,7 +341,7 @@ exports.podNumber = function (from, to, node, namespace, pod_name) {
         }
         if (body === '{"results":[{"statement_id":0}]}\n') {
           response = {
-            res: res.statusCode,
+            res: 404,
             response: "Please check the parameters, as no information is found "
           };
         } else {
@@ -358,8 +358,30 @@ exports.podNumber = function (from, to, node, namespace, pod_name) {
         resolve(response);
       });
   });
-}
+};
 
+
+exports.numberDays = function (from, to) {
+  return new Promise(function (resolve, reject) {
+    var response;
+    var fromDate = moment(from);
+    var toDate = moment(to);
+    if (from > to) {
+      response = {
+        res: 400,
+        response: "from is bigger that end"
+      };
+      return reject(response);
+    } else {
+      var days = toDate.diff(fromDate, 'days');
+      response = {
+        res: 200,
+        response: days
+      };
+      return resolve(response);
+    }
+  });
+};
 
 var buildQuery = (query, node, pod_name, namespace) => {
   if (node) {

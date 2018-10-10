@@ -127,3 +127,15 @@ module.exports.podNumber = function podNumber(req, res, next) {
       utils.writeJson(res, response);
     });
 };
+
+module.exports.numberDays = function numberDays(req, res, next) {
+  var from = req.swagger.params['from'].value;
+  var to = req.swagger.params['to'].value;
+  DefaultV2.numberDays(from, to)
+    .then(response => {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};

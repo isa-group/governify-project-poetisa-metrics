@@ -1,0 +1,140 @@
+
+    swagger: "2.0"
+    info: 
+      description: "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification"
+      version: "3.0.0"
+      title: "Swagger metrics"
+      termsOfService: "http://helloreverb.com/terms/"
+      contact: 
+        name: "ISA Research Group"
+        url: "http://www.isa.us.es/"
+        email: "isagroup.us@gmail.com"
+      license: 
+        name: "MIT"
+        url: "http://opensource.org/licenses/MIT"
+    host: "localhost:30500"
+    basePath: "/api/v3"
+    schemes: 
+      - "http"
+    consumes: 
+      - "application/json"
+    produces: 
+      - "application/json"
+    paths: 
+      /PN: 
+        get: 
+          description: "Pod Number"
+          operationId: "podNumber"
+          parameters: 
+            - 
+              name: "from"
+              in: "query"
+              description: "from date yyyy-mm-dd"
+              required: true
+              type: "string"
+              format: "date"
+            - 
+              name: "to"
+              in: "query"
+              description: "to date yyyy-mm-dd"
+              required: false
+              type: "string"
+              format: "date"
+            - 
+              name: "node"
+              required: false
+              in: "query"
+              type: "string"
+              description: "Name of node"
+            - 
+              name: "namespace"
+              required: false
+              in: "query"
+              type: "string"
+              description: "Namespace of the pod"
+            - 
+              name: "pod_name"
+              required: false
+              in: "query"
+              type: "string"
+              description: "Name of the nodes"
+          responses: 
+            200: 
+              description: "Occupied disk space on a node"
+            default: 
+              description: "unexpected error"
+          x-swagger-router-controller: "Default"
+      /ND: 
+        get: 
+          description: "Number de days"
+          operationId: "numberDays"
+          parameters: 
+            - 
+              name: "from"
+              in: "query"
+              description: "from date yyyy-mm-dd"
+              required: true
+              type: "string"
+              format: "date"
+            - 
+              name: "to"
+              in: "query"
+              description: "to date yyyy-mm-dd"
+              required: true
+              type: "string"
+              format: "date"
+          responses: 
+            200: 
+              description: "Average memory consumption of the node"
+            default: 
+              description: "unexpected error"
+          x-swagger-router-controller: "Default"
+      /generated/{metric_name}: 
+        get: 
+          description: "Returns the average value of the metric"
+          operationId: "generated"
+          parameters: 
+            - 
+              name: "metric_name"
+              in: "path"
+              description: "Name of the metric"
+              required: true
+              type: "string"
+            - 
+              name: "from"
+              in: "query"
+              description: "from date yyyy-mm-dd"
+              required: true
+              type: "string"
+              format: "date"
+            - 
+              name: "to"
+              in: "query"
+              description: "to date yyyy-mm-dd"
+              required: false
+              type: "string"
+              format: "date"
+            - 
+              name: "node"
+              in: "query"
+              description: "node of the system"
+              required: false
+              type: "string"
+            - 
+              name: "namespace"
+              in: "query"
+              description: "namespace of the system"
+              required: false
+              type: "string"
+            - 
+              name: "pod_name"
+              in: "query"
+              description: "pod of the system"
+              required: false
+              type: "string"
+          responses: 
+            200: 
+              description: "average value of the node"
+            default: 
+              description: "unexpected error"
+          x-swagger-router-controller: "Default"

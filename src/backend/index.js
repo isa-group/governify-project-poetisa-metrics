@@ -46,7 +46,7 @@ const app = express();
 
 const frontendPath = path.join(__dirname, '../frontend');
 const serverPort = process.env.PORT || config.server.port;
-const CURRENT_API_VERSION = 'v2';
+const CURRENT_API_VERSION = 'v3';
 
 app.use(express.static(frontendPath));
 
@@ -125,7 +125,7 @@ function _deploy(configurations, callback) {
     }
   }
   //list of swagger documents, one for each version of the api.
-  var swaggerDocs = [swaggerUtils.getSwaggerDoc(2)];
+  var swaggerDocs = [swaggerUtils.getSwaggerDoc(1),swaggerUtils.getSwaggerDoc(2),swaggerUtils.getSwaggerDoc(3)];
   //fromize swagger middleware for each swagger documents.
   swaggerUtils.initializeMiddleware(app, swaggerDocs, function () {
     if (config.server.listenOnHttps) {

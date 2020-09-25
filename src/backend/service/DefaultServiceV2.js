@@ -91,7 +91,7 @@ exports.avgAvailability = function (from, to, node, namespace, pod_name) {
  * node is a string than represents the name of a pod in the system
  * no response value expected for this operation
  **/
-exports.cpuLoad = function (from, to, node, namespace, pod_name) {
+exports.cpu = function (from, to, node, namespace, pod_name) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
@@ -160,7 +160,7 @@ exports.cpuLoad = function (from, to, node, namespace, pod_name) {
  * to is a string that represents the date to
  * no response value expected for this operation
  **/
-exports.diskSpace = function (from, to, node, pod_name, namespace) {
+exports.disk = function (from, to, node, pod_name, namespace) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
@@ -232,7 +232,7 @@ exports.diskSpace = function (from, to, node, pod_name, namespace) {
  * node is a string than represents the name of a pod in the system
  * no response value expected for this operation
  **/
-exports.avgMemoryRam = function (from, to, node, namespace, pod_name) {
+exports.memoryRam = function (from, to, node, namespace, pod_name) {
   return new Promise(function (resolve, reject) {
     var fromDate = moment(from);
     var toDate = moment(to);
@@ -298,7 +298,7 @@ exports.avgMemoryRam = function (from, to, node, namespace, pod_name) {
 exports.podNumber = function (from, to, node, namespace, pod_name) {
   return new Promise(function (resolve, reject) {
     var toDate = moment(to);
-    var query = 'SELECT distinct(*) FROM "restart_count" WHERE time > \'' + from.toISOString() + '\'';
+    var query = 'SELECT distinct(pod_number) FROM "restart_count" WHERE time > \'' + from.toISOString() + '\'';
     if (to) {
       if (from > to) {
         response = {

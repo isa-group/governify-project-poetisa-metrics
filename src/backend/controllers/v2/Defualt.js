@@ -1,7 +1,7 @@
 'use strict';
 
 var utils = require('../../utils/writer');
-var DefaultV2 = require('../../service/DefaultV2Servicev2');
+var DefaultV2 = require('../../service/DefaultServicev2');
 
 module.exports.avgAvailability = function avgAvailability(req, res, next) {
     var from = req.swagger.params['from'].value;
